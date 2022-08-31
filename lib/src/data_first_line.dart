@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class DataButton1 extends StatelessWidget {
   List<String> data = [];
-  DataButton1(this.data);
+  DataButton1(this.data, {Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     if (data.length == 4) {
