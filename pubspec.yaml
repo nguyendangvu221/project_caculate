@@ -36,6 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   svg_icon: ^0.0.1
   flutter_svg: ^0.22.0
+  math_expressions: ^2.3.1
 
 dev_dependencies:
   flutter_test:

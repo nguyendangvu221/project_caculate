@@ -1,78 +1,50 @@
 import 'package:flutter/material.dart';
+import 'package:math_expressions/math_expressions.dart';
 
-class DataButton extends StatefulWidget {
-  DataButton(this.data, {Key? key}) : super(key: key);
-  List<String> data = [];
-
-  @override
-  State<DataButton> createState() => _DataButtonState();
-}
-
-class _DataButtonState extends State<DataButton> {
-  void addNum(String addData) {
-    setState(() {
-      TransmissionData.of(context)!.numCal += addData;
-    });
-  }
-
+class DataButton extends StatelessWidget {
+  final Function(String) onPress;
+  final List<String> data;
+  const DataButton({required this.onPress, required this.data, Key? key})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         TextButton(
-          onPressed: (() {
-            addNum(widget.data[0]);
-          }),
+          onPressed: (() => onPress(data[0])),
           child: Text(
-            widget.data[0],
+            data[0],
             style: Theme.of(context).textTheme.headline5,
           ),
         ),
         TextButton(
-          onPressed: (() {}),
+          onPressed: (() => onPress(data[1])),
           child: Text(
-            widget.data[1],
+            data[1],
             style: Theme.of(context).textTheme.headline5,
           ),
         ),
         TextButton(
-          onPressed: (() {}),
+          onPressed: (() => onPress(data[2])),
           child: Text(
-            widget.data[2],
+            data[2],
             style: Theme.of(context).textTheme.headline5,
           ),
         ),
         TextButton(
-          onPressed: (() {}),
+          onPressed: (() => onPress(data[3])),
           style: TextButton.styleFrom(
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.0)),
             backgroundColor: Color.fromARGB(85, 182, 169, 169),
           ),
           child: Text(
-            widget.data[3],
+            data[3],
             style: Theme.of(context).textTheme.headline5,
           ),
         ),
       ],
     );
-  }
-}
-
-class TransmissionData extends InheritedWidget {
-   String numCal = "";
-  TransmissionData({super.key, required this.child,required this.numCal}) : super(child: child);
-  final Widget child;
-  static TransmissionData? of(BuildContext context) {
-    final TransmissionData? result =
-        context.dependOnInheritedWidgetOfExactType<TransmissionData>();
-    assert(result != null, throw 'No TransmissionData found in context');
-    return result!;
-  }
-
-  @override
-  bool updateShouldNotify(TransmissionData oldWidget) {
-    return true;
   }
 }
