@@ -13,12 +13,12 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   Calculate cal = Calculate();
-  int counter = 0;
+  List<String> saveResult = [];
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      darkTheme: ThemeData.dark(),
-      theme: ThemeData.light(),
+      // darkTheme: ThemeData.dark(),
+      theme: ThemeData.dark(),
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         body: Column(
@@ -42,11 +42,12 @@ class _MyAppState extends State<MyApp> {
                         Container(
                           alignment: Alignment.bottomRight,
                           margin: const EdgeInsets.only(top: 10, right: 30.0),
-                          child: const Text(
-                            "24.45",
-                            style: TextStyle(
-                                fontSize: 55,
-                                color: Color.fromARGB(255, 25, 238, 32)),
+                          child: Text(
+                            cal.calResult,
+                            style: const TextStyle(
+                              fontSize: 55,
+                              color: Color.fromARGB(255, 25, 238, 32),
+                            ),
                           ),
                         ),
                       ],
@@ -76,14 +77,14 @@ class _MyAppState extends State<MyApp> {
                   children: <Widget>[
                     DataButton1(
                         onPress: (data) => setState(() {
-                          if(data == "AC"){
-                            cal.clearNum();
-                          }
-                          else if(data == "DEL"){
-                            cal.delNum();
-                          }else{
-                            cal.addNum(data);
-                          }
+                              if (data == "AC") {
+                                cal.clearNum();
+                                cal.calResult = "";
+                              } else if (data == "DEL") {
+                                cal.delNum();
+                              } else {
+                                cal.addNum(data);
+                              }
                             }),
                         data: const ["AC", "DEL", "%", "÷"]),
                     DataButton(
@@ -103,7 +104,12 @@ class _MyAppState extends State<MyApp> {
                         data: const ["1", "2", "3", "+"]),
                     DataButton1(
                         onPress: (data) => setState(() {
-                              cal.calNum = cal.calNum + data;
+                              if (data == "=") {
+                                cal.calculate();
+                                saveResult.add(cal.calResult);
+                              } else {
+                                cal.calNum = cal.calNum + data;
+                              }
                             }),
                         data: const ["0", ".", "="]),
                   ],
@@ -115,19 +121,4 @@ class _MyAppState extends State<MyApp> {
       ),
     );
   }
-}
-
-Widget onPressed(String data) {
-  return TextButton(
-    onPressed: () {},
-    style: TextButton.styleFrom(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
-      ),
-      backgroundColor: const Color.fromARGB(85, 182, 169, 169),
-    ),
-    child: Text(
-      data,
-    ),
-  );
 }
